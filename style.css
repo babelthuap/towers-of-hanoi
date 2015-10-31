@@ -1,0 +1,19 @@
+.area {
+  display: inline-block;
+  width: 300px;
+  height: 400px;
+  border: 5px solid black;
+  position: relative;
+}
+
+.area div {
+  position: absolute;
+  height: 45px;
+  background-color: black;
+  margin: auto;
+  margin-top: 5px;
+}
+
+.selected {
+  opacity: 0.5;
+}

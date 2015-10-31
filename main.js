@@ -1,7 +1,9 @@
 $(document).ready(function(){
 
-  restart();
+  var currentNumBlocks;
   var $selectedBlock = null;
+
+  restart();
 
   $('#input-numBlocks').on('input', function() {
     $(numBlocks).text( $(this).val() );
@@ -11,11 +13,13 @@ $(document).ready(function(){
 
   $('.area').click(areaClicked);
 
+  $('#solve').click(solve);
+
   function areaClicked() {
     var areaClicked = this.id;
 
     if ($selectedBlock) {
-      var areaOfSelected = $selectedBlock.parent().attr('id')
+      var areaOfSelected = $selectedBlock.parent().attr('id');
 
       if (areaClicked !== areaOfSelected) {
         var moved = move(areaOfSelected, areaClicked);
@@ -68,6 +72,7 @@ $(document).ready(function(){
     if (+$block.attr('id') < +highestBlockInDest) {
       $('#' + toArea).prepend( $block );
       position($block);
+      if (isWinState()) $('#winMessage').text('You Win!');
       return true;
     } else {
       return false;
@@ -82,11 +87,28 @@ $(document).ready(function(){
     $block.css('bottom', moveToPos); 
   }
 
-  function restart() {
-    $('#gameboard .area').empty();
-    generateBlocks( +$('#input-numBlocks').val() );
+  function isWinState() {
+    return $('#1').parent().attr('id') === "goal" &&
+      $('#' + currentNumBlocks).parent().attr('id') === "goal";
   }
 
+  function restart() {
+    $('#winMessage').empty();
+    $('#gameboard .area').empty();
+    currentNumBlocks = +$('#input-numBlocks').val();
+    generateBlocks( currentNumBlocks );
+  }
 
+  function solve() {
+    console.log('woot');
+  }
 
 });
+
+
+
+
+
+
+
+

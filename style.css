@@ -2,6 +2,10 @@ body {
   background-color: #CCC;
 }
 
+#winMessage {
+  color: red;
+}
+
 .area {
   display: inline-block;
   width: 300px;

@@ -1,9 +1,17 @@
 $(document).ready(function(){
 
-  generateBlocks(7);
+  restart();
   var $selectedBlock = null;
 
-  $('.area').click(function(e){
+  $('#input-numBlocks').on('input', function() {
+    $(numBlocks).text( $(this).val() );
+  });
+
+  $('#restart').click(restart);
+
+  $('.area').click(areaClicked);
+
+  function areaClicked() {
     var areaClicked = this.id;
 
     if ($selectedBlock) {
@@ -19,7 +27,7 @@ $(document).ready(function(){
     } else {
       toggleSelected( areaClicked );
     }
-  });
+  }
 
   function generateBlocks(n) {
     var rainbow = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple', 'black']
@@ -44,8 +52,6 @@ $(document).ready(function(){
     $('#start').append( $blocks );
   }
 
-
-
   // highlight the top block in the specified area
   function toggleSelected(area) {
     var $block = $('#' + area).children().first();
@@ -64,7 +70,6 @@ $(document).ready(function(){
       position($block);
       return true;
     } else {
-      console.log('invalid move');
       return false;
     }
   }
@@ -76,5 +81,12 @@ $(document).ready(function(){
     var moveToPos = (+posOfNext.slice(0, -2) + 50) + 'px';
     $block.css('bottom', moveToPos); 
   }
+
+  function restart() {
+    $('#gameboard .area').empty();
+    generateBlocks( +$('#input-numBlocks').val() );
+  }
+
+
 
 });

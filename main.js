@@ -1,10 +1,9 @@
 $(document).ready(function(){
 
-
+  generateBlocks(7);
   var $selectedBlock = null;
 
   $('.area').click(function(e){
-    console.log('clicked', this.id);
     var areaClicked = this.id;
 
     if ($selectedBlock) {
@@ -16,11 +15,35 @@ $(document).ready(function(){
       } else {
         toggleSelected( areaClicked );
       }
-
+      
     } else {
       toggleSelected( areaClicked );
     }
   });
+
+  function generateBlocks(n) {
+    var rainbow = ['red', 'orange', 'yellow', 'green', 'teal', 'blue', 'purple', 'black']
+    var areaWidth = +$('#start').css('width').slice(0,-2);
+    
+    var $blocks = [];
+
+    for (var i = 1; i <= n; i++) {
+      var $block = $('<div>');
+      $block.attr('id', i);
+
+      var widthPercent = (15 + (i-1) * 75 / (n-1)); // 15% .. 90%
+      var widthPixels = 0.01 * widthPercent * areaWidth;
+      $block.css('width', widthPercent + '%');
+      $block.css('bottom', ((n - i) * 50) + 'px');
+      $block.css('left', ((areaWidth - widthPixels) / 2) + 'px');
+      $block.css('background-color', rainbow[i - 1]);
+
+      $blocks.push( $block );
+    }
+
+    $('#start').append( $blocks );
+  }
+
 
 
   // highlight the top block in the specified area

@@ -4,6 +4,7 @@ body {
 
 #winMessage {
   color: red;
+  min-height: 27px;
 }
 
 .area {

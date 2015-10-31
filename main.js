@@ -5,15 +5,12 @@ $(document).ready(function(){
 
   restart();
 
+  $('#restart').click(restart);
+  $('.area').click(areaClicked);
+  $('#solve').click(solve);
   $('#input-numBlocks').on('input', function() {
     $(numBlocks).text( $(this).val() );
   });
-
-  $('#restart').click(restart);
-
-  $('.area').click(areaClicked);
-
-  $('#solve').click(solve);
 
   function areaClicked() {
     var areaClicked = this.id;
@@ -64,7 +61,7 @@ $(document).ready(function(){
   }
 
   // move the top block from fromArea to toArea if legal
-  function move(fromArea, toArea) {
+  function move(fromArea, toArea) {    
     var $block = $('#' + fromArea).children().first();
     var highestBlockInDest = $('#' + toArea).children().first().attr('id');
     if (!highestBlockInDest) highestBlockInDest = Infinity;
@@ -88,8 +85,7 @@ $(document).ready(function(){
   }
 
   function isWinState() {
-    return $('#1').parent().attr('id') === "goal" &&
-      $('#' + currentNumBlocks).parent().attr('id') === "goal";
+    return $('#goal').children().length === currentNumBlocks;
   }
 
   function restart() {
@@ -99,16 +95,21 @@ $(document).ready(function(){
     generateBlocks( currentNumBlocks );
   }
 
+  var moveNum = 0;
   function solve() {
-    console.log('woot');
+    moveNum = 0;
+    hanoi(currentNumBlocks, 'start', 'middle', 'goal');
   }
 
+  function hanoi(block, start, middle, goal) {
+    if (block > 0) {
+      hanoi(block - 1, start, goal, middle);
+      setTimeout(function() {
+        move(start, goal);
+      }, moveNum * 400);
+      moveNum++;
+      hanoi(block - 1, middle, start, goal);
+    }
+  };
+
 });
-
-
-
-
-
-
-
-
